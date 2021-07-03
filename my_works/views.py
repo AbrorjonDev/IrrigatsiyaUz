@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework import serializers, status
 from .models import MyWorks
 from .serializers import MyWorksSerializers
@@ -7,6 +7,50 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 from django.http import Http404
+
+from rest_framework import permissions, pagination
+from rest_framework.permissions import IsAuthenticated, BasePermission
+from rest_framework import viewsets
+from .paginations import CustomPagination
+
+class IsOwnerOrReadOnly(BasePermission):
+    def has_object_permission(self, request, view, object):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+        return object.author == request.user
+
+
+class WorksViewList(viewsets.ModelViewSet):
+    # permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]    
+    queryset = MyWorks.objects.all().order_by('-date_updated')
+    serializer_class = MyWorksSerializers
+    pagination_class = CustomPagination
+ 
+    def get_object(self, queryset=None, **kwargs):
+        work = self.kwargs.get('pk')
+        return get_object_or_404(MyWorks, slug=work)
+
+    def list(self, request):
+        serializer = MyWorksSerializers(self.queryset, many=True)
+        return Response(serializer.data)
+ 
+    def create(self, request):
+        serializer = MyWorksSerializers(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+        return Response(serializer.data)
+
+    # def retrieve(self, request, pk=None):
+    #     work = get_object_or_404(self.queryset, pk=pk)
+    #     serializer = MyWorksSerializers(work)
+    #     return Response(serializer.data)
+
+    # def destroy(self, request, pk=None):
+    #     work = get_object_or_404(self.queryset, pk=pk)
+    #     work.delete()
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 
 class MyWorksView(APIView):
