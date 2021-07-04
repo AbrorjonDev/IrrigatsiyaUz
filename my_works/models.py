@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
-
+ 
 
 class MyWorks(models.Model):
     
@@ -35,12 +35,9 @@ class MyWorks(models.Model):
             self.slug = slugify(self.name)
         return super(MyWorks,self).save(*args, **kwargs)
 
-
-
-
 class Articles(models.Model):
     name = models.CharField(max_length=500, blank=True)
-    file = models.FileField(null=True, upload_to='articles')
+    file = models.FileField(blank=True, null=True, upload_to='articles')
     link = models.URLField(blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date_published = models.DateTimeField(auto_now_add=True)
@@ -59,9 +56,10 @@ class Articles(models.Model):
             self.slug = slugify(self.name)
         return super(Articles,self).save(*args, **kwargs)
 
+
 class Books(models.Model):
     name = models.CharField(max_length=500, blank=True)
-    file = models.FileField(null=True, upload_to='books')
+    file = models.FileField(blank=True, null=True, upload_to='books')
     link = models.URLField(blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date_published = models.DateTimeField(auto_now_add=True)
@@ -80,9 +78,10 @@ class Books(models.Model):
             self.slug = slugify(self.name)
         return super(Books,self).save(*args, **kwargs)
 
+
 class Presentations(models.Model):
     name = models.CharField(max_length=500, blank=True)
-    file = models.FileField(null=True, upload_to='presentations')
+    file = models.FileField(blank=True, null=True, upload_to='presentations')
     link = models.URLField(blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date_published = models.DateTimeField(auto_now_add=True)
@@ -101,9 +100,10 @@ class Presentations(models.Model):
             self.slug = slugify(self.name)
         return super(Presentations,self).save(*args, **kwargs)
 
+
 class Projects(models.Model):
     name = models.CharField(max_length=500, blank=True)
-    file = models.FileField(null=True, upload_to='projects')
+    file = models.FileField(blank=True, null=True, upload_to='projects')
     link = models.URLField(blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date_published = models.DateTimeField(auto_now_add=True)
@@ -122,9 +122,10 @@ class Projects(models.Model):
             self.slug = slugify(self.name)
         return super(Projects,self).save(*args, **kwargs)
 
+
 class Events(models.Model):
     name = models.CharField(max_length=500, blank=True)
-    file = models.FileField(null=True, upload_to='events')
+    file = models.FileField(blank=True, null=True, upload_to='events')
     link = models.URLField(blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date_published = models.DateTimeField(auto_now_add=True)
@@ -143,9 +144,10 @@ class Events(models.Model):
             self.slug = slugify(self.name)
         return super(Events,self).save(*args, **kwargs)
 
+
 class Videos(models.Model):
     name = models.CharField(max_length=500, blank=True)
-    file = models.FileField(null=True, upload_to='videos')
+    file = models.FileField(blank=True, null=True, upload_to='videos')
     link = models.URLField(blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date_published = models.DateTimeField(auto_now_add=True)

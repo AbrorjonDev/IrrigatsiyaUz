@@ -25,7 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'livesync',
+    # 'livesync',
     'django.contrib.staticfiles',
     
     'accounts.apps.AccountsConfig',
@@ -33,13 +33,15 @@ INSTALLED_APPS = [
     
     'crispy_forms',
     'rest_framework',
-    'corsheaders',
+    'django_cleanup',
+    # 'drf_writable_nested',
+    # 'corsheaders',
     # 'phonenumber_fields',
 ]
 
-MIDDLEWARE_CLASSES = (
-'livesync.core.middleware.DjangoLiveSyncMiddleware',
-)
+# MIDDLEWARE_CLASSES = (
+# 'livesync.core.middleware.DjangoLiveSyncMiddleware',
+# )
 
 
 MIDDLEWARE = [
@@ -50,7 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    # 'corsheaders.middleware.CorsMiddleware',
 ]
 # CORS_ORIGIN_WHITELIST = (
 #     'localhost':3000,
@@ -114,7 +116,7 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.MultiPartParser',
     ],
     'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE':1,
+    'PAGE_SIZE':3,
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
         # 'rest_framework.permissions.IsOwnerOrReadOnly',
