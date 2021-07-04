@@ -35,6 +35,8 @@ class MyWorks(models.Model):
             self.slug = slugify(self.name)
         return super(MyWorks,self).save(*args, **kwargs)
 
+
+
 class Articles(models.Model):
     name = models.CharField(max_length=500, blank=True)
     file = models.FileField(blank=True, null=True, upload_to='articles')
