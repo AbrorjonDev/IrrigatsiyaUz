@@ -47,7 +47,7 @@ class PaginationClass(PageNumberPagination):
 
 
 class WorksViewList(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]    
+    permission_classes = [IsOwnerOrReadOnly]    
     queryset = MyWorks.objects.all().order_by('-date_updated')
     serializer_class = MyWorksSerializers
     pagination_class = CustomPagination
@@ -71,7 +71,7 @@ class WorksViewList(viewsets.ModelViewSet):
 
 
 class ArticlesViewList(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]    
+    permission_classes = [IsOwnerOrReadOnly]    
     queryset = Articles.objects.all().order_by('-date_updated')
     serializer_class = ArticlesSerializers
     pagination_class = CustomPagination
@@ -143,7 +143,7 @@ class PresentationsViewList(viewsets.ModelViewSet):
 
 
 class ProjectsViewList(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]    
+    permission_classes = [IsOwnerOrReadOnly]    
     queryset = Projects.objects.all().order_by('-date_updated')
     serializer_class = ProjectsSerializers
     pagination_class = CustomPagination
@@ -167,7 +167,7 @@ class ProjectsViewList(viewsets.ModelViewSet):
 
 
 class EventsViewList(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]    
+    permission_classes = [IsOwnerOrReadOnly]    
     queryset = Events.objects.all().order_by('-date_updated')
     serializer_class = EventsSerializers
     pagination_class = CustomPagination
@@ -191,7 +191,7 @@ class EventsViewList(viewsets.ModelViewSet):
 
 
 class VideosViewList(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]    
+    permission_classes = [IsOwnerOrReadOnly]    
     queryset = Videos.objects.all().order_by('-date_updated')
     serializer_class = VideosSerializers
     pagination_class = CustomPagination

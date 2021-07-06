@@ -25,7 +25,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    # 'livesync',
     'django.contrib.staticfiles',
     
     'accounts.apps.AccountsConfig',
@@ -34,9 +33,11 @@ INSTALLED_APPS = [
     'crispy_forms',
     'rest_framework',
     'django_cleanup',
+    'djoser',
+    'rest_framework.authtoken',
     # 'drf_writable_nested',
     # 'corsheaders',
-    # 'phonenumber_fields',
+    'phonenumber_field',
 ]
 
 # MIDDLEWARE_CLASSES = (
@@ -90,6 +91,29 @@ DATABASES = {
 }
 
 
+#DJANGO REST FRAMEWORK
+REST_FRAMEWORK = {
+ 
+    'DEFAULT_AUTHENTICATION_CLASSES':[
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser',
+    ],
+    'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE':3,
+    'DEFAULT_PERMISSION_CLASSES': [
+        # 'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.permissions.IsOwnerOrReadOnly',
+    ]
+
+}
+
+
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -108,21 +132,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-#DJANGO REST FRAMEWORK
-REST_FRAMEWORK = {
-    'DEFAULT_PARSER_CLASSES': [
-        'rest_framework.parsers.JSONParser',
-        'rest_framework.parsers.FormParser',
-        'rest_framework.parsers.MultiPartParser',
-    ],
-    'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE':3,
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-        # 'rest_framework.permissions.IsOwnerOrReadOnly',
-    ]
-
-}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
