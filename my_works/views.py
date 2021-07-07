@@ -7,7 +7,7 @@ from rest_framework.pagination import PageNumberPagination
 from django.http import Http404
 
 from rest_framework import permissions, pagination
-from rest_framework.permissions import IsAuthenticated, BasePermission
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, BasePermission
 from rest_framework import viewsets
 from .paginations import CustomPagination
 
@@ -39,11 +39,12 @@ class IsOwnerOrReadOnly(BasePermission):
 
         return object.author == request.user
 
+
 class PaginationClass(PageNumberPagination):
     page_query_param = 'p'
-    page_size = 4
+    page_size = 10
     page_size_query_param = 'page_size'
-    max_page_size = 4
+    max_page_size = 10
 
 
 class WorksViewList(viewsets.ModelViewSet):
@@ -71,7 +72,7 @@ class WorksViewList(viewsets.ModelViewSet):
 
 
 class ArticlesViewList(viewsets.ModelViewSet):
-    permission_classes = [IsOwnerOrReadOnly]    
+    permission_classes = [ IsOwnerOrReadOnly, IsAuthenticatedOrReadOnly]    
     queryset = Articles.objects.all().order_by('-date_updated')
     serializer_class = ArticlesSerializers
     pagination_class = CustomPagination
@@ -91,11 +92,10 @@ class ArticlesViewList(viewsets.ModelViewSet):
         serializer = ArticlesSerializers(data=request.data)
         if serializer.is_valid():
             serializer.save()
-        return Response(serializer.data)
-
+        return Response(serializer.data)    
 
 class BooksViewList(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]    
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]    
     queryset = Books.objects.all().order_by('-date_updated')
     serializer_class = BooksSerializers
     pagination_class = CustomPagination
@@ -119,7 +119,7 @@ class BooksViewList(viewsets.ModelViewSet):
 
 
 class PresentationsViewList(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]    
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]    
     queryset = Presentations.objects.all().order_by('-date_updated')
     serializer_class = PresentationsSerializers
     pagination_class = CustomPagination
@@ -143,7 +143,7 @@ class PresentationsViewList(viewsets.ModelViewSet):
 
 
 class ProjectsViewList(viewsets.ModelViewSet):
-    permission_classes = [IsOwnerOrReadOnly]    
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]    
     queryset = Projects.objects.all().order_by('-date_updated')
     serializer_class = ProjectsSerializers
     pagination_class = CustomPagination
@@ -167,7 +167,7 @@ class ProjectsViewList(viewsets.ModelViewSet):
 
 
 class EventsViewList(viewsets.ModelViewSet):
-    permission_classes = [IsOwnerOrReadOnly]    
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]    
     queryset = Events.objects.all().order_by('-date_updated')
     serializer_class = EventsSerializers
     pagination_class = CustomPagination
@@ -191,7 +191,7 @@ class EventsViewList(viewsets.ModelViewSet):
 
 
 class VideosViewList(viewsets.ModelViewSet):
-    permission_classes = [IsOwnerOrReadOnly]    
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]    
     queryset = Videos.objects.all().order_by('-date_updated')
     serializer_class = VideosSerializers
     pagination_class = CustomPagination

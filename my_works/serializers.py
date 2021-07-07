@@ -37,9 +37,12 @@ class ArticlesSerializers(serializers.ModelSerializer):
      
     class Meta:
         model = Articles
-        fields = ('name', 
+        fields = ('slug', 'name', 
                 'file', 'link', 'author', 
                 'date_published', 'date_updated')
+        extra_kwargs = {
+            'date_published':{'read_only':True},
+            }
 
     def create(self, validated_data):
         return Articles.objects.create(**validated_data, author_id=2)         
@@ -59,7 +62,7 @@ class BooksSerializers(serializers.ModelSerializer):
      
     class Meta:
         model = Books
-        fields = ('name', 
+        fields = ('slug', 'name', 
                 'file', 'link', 'author', 
                 'date_published', 'date_updated')
 
@@ -81,7 +84,7 @@ class PresentationsSerializers(serializers.ModelSerializer):
      
     class Meta:
         model = Presentations
-        fields = ('name', 
+        fields = ('slug', 'name', 
                 'file', 'link', 'author', 
                 'date_published', 'date_updated')
 
@@ -103,7 +106,7 @@ class ProjectsSerializers(serializers.ModelSerializer):
      
     class Meta:
         model = Projects
-        fields = ('name', 
+        fields = ('slug', 'name', 
                 'file', 'link', 'author', 
                 'date_published', 'date_updated')
 
@@ -125,7 +128,7 @@ class EventsSerializers(serializers.ModelSerializer):
      
     class Meta:
         model = Events
-        fields = ('name', 
+        fields = ('slug', 'name', 
                 'file', 'link', 'author', 
                 'date_published', 'date_updated')
 
@@ -147,7 +150,7 @@ class VideosSerializers(serializers.ModelSerializer):
      
     class Meta:
         model = Videos
-        fields = ('name', 
+        fields = ('slug', 'name', 
                 'file', 'link', 'author', 
                 'date_published', 'date_updated')
 

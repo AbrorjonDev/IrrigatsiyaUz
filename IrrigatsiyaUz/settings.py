@@ -105,7 +105,7 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.MultiPartParser',
     ],
     'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE':3,
+    'PAGE_SIZE':10, 
     'DEFAULT_PERMISSION_CLASSES': [
         # 'rest_framework.permissions.IsAuthenticated',
         # 'rest_framework.permissions.IsOwnerOrReadOnly',
@@ -171,6 +171,10 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'aahmadov271101@gmail.com'
 EMAIL_HOST_PASSWORD = 'dell@inspire1188.'
+
+
+LOGIN_REDIRECT_URL = '/me/'
+LOGOUT_REDIRECT_URL = '/me/'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
