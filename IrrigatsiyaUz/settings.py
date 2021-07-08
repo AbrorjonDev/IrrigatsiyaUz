@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_cleanup',
     'djoser',
-    'rest_framework.authtoken',
+    # 'rest_framework.authtoken',
     # 'drf_writable_nested',
     # 'corsheaders',
     'phonenumber_field',
@@ -97,7 +97,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES':[
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication',
     ],
     'DEFAULT_PARSER_CLASSES': [
         'rest_framework.parsers.JSONParser',
