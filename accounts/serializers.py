@@ -14,8 +14,12 @@ class UserSerializer(serializers.ModelSerializer):
 				'validators':[UnicodeUsernameValidator()]
 			},
 		}
+    def update(self, instance, validated_data):
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.email = validated_data.get('email', instance.email)
 class ProfileSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    user = UserSerializer(required=True)
 
     class Meta:
         model = Profile

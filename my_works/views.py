@@ -12,7 +12,6 @@ from rest_framework import viewsets
 from .paginations import CustomPagination
 
 from .models import (
-    MyWorks,
     Articles,
     Books, 
     Presentations,
@@ -22,7 +21,6 @@ from .models import (
     )
 
 from .serializers import (
-    MyWorksSerializers,
     ArticlesSerializers,
     BooksSerializers,
     PresentationsSerializers,
@@ -47,36 +45,12 @@ class PaginationClass(PageNumberPagination):
     max_page_size = 10
 
 
-class WorksViewList(viewsets.ModelViewSet):
-    permission_classes = [IsOwnerOrReadOnly]    
-    queryset = MyWorks.objects.all().order_by('-date_updated')
-    serializer_class = MyWorksSerializers
-    pagination_class = CustomPagination
- 
-    def get_object(self, queryset=None, **kwargs):
-        work = self.kwargs.get('pk')
-        return get_object_or_404(MyWorks, slug=work)
-
-    def list(self, request):
-        pagination = PaginationClass()
-        results = pagination.paginate_queryset(self.queryset, request) 
-        serializer = MyWorksSerializers(results, many=True)
-        return pagination.get_paginated_response(serializer.data)
- 
- 
-    def create(self, request):
-        serializer = MyWorksSerializers(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-        return Response(serializer.data)
-
-
 class ArticlesViewList(viewsets.ModelViewSet):
     permission_classes = [ IsOwnerOrReadOnly, IsAuthenticatedOrReadOnly]    
     queryset = Articles.objects.all().order_by('-date_updated')
     serializer_class = ArticlesSerializers
     pagination_class = CustomPagination
- 
+
     def get_object(self, queryset=None, **kwargs):
         work = self.kwargs.get('pk')
         return get_object_or_404(Articles, slug=work)
@@ -212,64 +186,3 @@ class VideosViewList(viewsets.ModelViewSet):
         if serializer.is_valid():
             serializer.save()
         return Response(serializer.data)
-
-
-
-# class MyWorksView(APIView):
-    
-#     pagination_class = PageNumberPagination
-#     parser_classes = [MultiPartParser, FormParser]
-
-#     def get(self, request, *args, **kwargs):
-#         qs = MyWorks.objects.all()
-#         serializers = MyWorksSerializers(qs, many=True)
-#         return Response(serializers.data, status=200)
-        
-#     def post(self, request, *args, **kwargs):
-#         print(request.data)
-#         serializer = MyWorksSerializers(data=request.data)
-        
-#         if serializer.is_valid():
-#             # category = serializer.data.get('category')
-#             # name = serializer.data.get('name')
-#             # file = serializer.data.get('file')
-#             # link = serializer.data.get('link')
-#             # date_published = serializer.data.get('date_published')
-#             # author = serializer.data.get('category')
-#             # category = serializer.data.get('category')
-#             serializer.save()
-#             return Response(serializer.data, status=200)
-#         else:
-#             return Response(serializer.errors)
-
-# class MyWorksDetail(APIView):
-
-#     parser_classes = [MultiPartParser, FormParser]
-
-
-#     def get_object(self, pk):
-#         try:
-#             return MyWorks.objects.get(id=pk)
-#         except MyWorks.DoesNotExist:
-#             return Http404
-    
-#     def get(self,request, pk, **args):
-#         work = self.get_object(pk)
-#         serializer = MyWorksSerializers(work, many=False)
-#         return Response(serializer.data)
-
-#     def put(self, request, pk, **kwargs):
-#         work = self.get_object(pk)
-
-#         serializer = MyWorksSerializers(work, data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data)
-#         else:
-#             return Response(serializer.errors, status=400)
-
-#     def delete(self, pk):
-#         work = self.get_object(pk)
-#         work.delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
-

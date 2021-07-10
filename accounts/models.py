@@ -21,13 +21,3 @@ class Profile(models.Model):
             output=(300, 300)
             img.thumbnail(output)
             img.save(self.avatar.path)
-
-
-class Students(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(default='user.jpeg', upload_to='students_images')
-
-
-    def __str__(self):
-        return f'{self.user.username}' or f'{self.user.email}'
-        

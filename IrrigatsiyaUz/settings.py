@@ -33,10 +33,10 @@ INSTALLED_APPS = [
     'crispy_forms',
     'rest_framework',
     'django_cleanup',
+    'django_filters',
     'djoser',
-    # 'rest_framework.authtoken',
-    # 'drf_writable_nested',
-    # 'corsheaders',
+    'rest_framework.authtoken',
+    'corsheaders',
     'phonenumber_field',
 ]
 
@@ -53,7 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 # CORS_ORIGIN_WHITELIST = (
 #     'localhost':3000,
@@ -97,7 +97,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES':[
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-        # 'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ],
     'DEFAULT_PARSER_CLASSES': [
         'rest_framework.parsers.JSONParser',
@@ -106,11 +106,6 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE':10, 
-    'DEFAULT_PERMISSION_CLASSES': [
-        # 'rest_framework.permissions.IsAuthenticated',
-        # 'rest_framework.permissions.IsOwnerOrReadOnly',
-    ]
-
 }
 
 
@@ -169,12 +164,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'aahmadov271101@gmail.com'
-EMAIL_HOST_PASSWORD = 'dell@inspire1188.'
+EMAIL_HOST_USER = 'abrorjonaxmadov21@gmail.comm'
+EMAIL_HOST_PASSWORD = 'testing321'
 
-
-LOGIN_REDIRECT_URL = '/me/'
 LOGOUT_REDIRECT_URL = '/me/'
-
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
