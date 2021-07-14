@@ -9,7 +9,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('my_works.urls')),
     path('me/', include('accounts.urls')),
-]+(static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
+] +(static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)) + (static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
 
 admin.site.site_header = 'Alimardon Mustafoqulov Administration'
 admin.site.site_title = 'Administration Panel'
