@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'phonenumber_field',
+    'drf_yasg',
 ]
 
 # MIDDLEWARE_CLASSES = (
@@ -58,6 +59,7 @@ MIDDLEWARE = [
 # CORS_ORIGIN_WHITELIST = (
 #     'localhost':3000,
 #     )
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'IrrigatsiyaUz.urls'
 
