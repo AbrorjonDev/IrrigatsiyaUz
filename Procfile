@@ -1,1 +1,1 @@
-web: gunicorn config.wsgi --log-file -
+web: gunicorn IrrigatsiyaUz.wsgi --log-file -
