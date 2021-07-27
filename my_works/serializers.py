@@ -7,7 +7,7 @@ from .models import (
     Events,
     Videos,
     )
-
+import re
 class ArticlesSerializers(serializers.ModelSerializer):
      
     class Meta:
@@ -150,13 +150,29 @@ class VideosSerializers(serializers.ModelSerializer):
             'date_published':{'read_only':True},
             'slug':{'read_only':True},
             }
+
+    def link_management(self, validated_data):
+        link = validated_data.get('link')
+        
+        if link:
+            if not link.find('https://youtube.com/embed/'):
+                return link  
+            elif link.find('youtu.be'):
+                res = link.find('youtu.be/')
+                result = link[:res] + 'youtube.com/embed/' + link[(res+9):]
+                link = result
+                return link
     def create(self, validated_data):
-        return Videos.objects.create(**validated_data, author_id=1)         
+        name = validated_data.get('name')
+        file = validated_data.get('file')
+        return Videos.objects.create(name=name, file=file, link=self.link_management(validated_data=validated_data), author_id=1)         
+    
 
     def update(self, instance, validated_data):
+        
         instance.name = validated_data.get('name', instance.name)
         instance.file = validated_data.get('file', instance.file)
-        instance.link = validated_data.get('link', instance.link)
+        instance.link = self.link_management(validated_data=validated_data)
         instance.author = validated_data.get('author', instance.author)
         instance.date_published = validated_data.get('date_published', instance.date_published)
         instance.date_updated = validated_data.get('date_updated', instance.date_updated)

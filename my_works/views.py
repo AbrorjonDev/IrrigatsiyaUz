@@ -10,6 +10,7 @@ from rest_framework import permissions, pagination
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, BasePermission
 from rest_framework import viewsets
 from .paginations import CustomPagination
+import re
 
 from .models import (
     Articles,
@@ -38,28 +39,25 @@ class IsOwnerOrReadOnly(BasePermission):
         return object.author == request.user
 
 
-class PaginationClass(PageNumberPagination):
-    page_query_param = 'p'
-    page_size = 10
-    page_size_query_param = 'page_size'
-    max_page_size = 10
+# class PaginationClass(PageNumberPagination):
+#     page_query_param = 'p'
+#     page_size = 10
+#     page_size_query_param = 'page_size'
+#     max_page_size = 10
 
 
 class ArticlesViewList(viewsets.ModelViewSet):
     permission_classes = [ IsOwnerOrReadOnly, IsAuthenticatedOrReadOnly]    
     queryset = Articles.objects.all().order_by('-date_updated')
     serializer_class = ArticlesSerializers
-    pagination_class = CustomPagination
 
     def get_object(self, queryset=None, **kwargs):
         work = self.kwargs.get('pk')
         return get_object_or_404(Articles, slug=work)
 
     def list(self, request):
-        pagination = PaginationClass()
-        results = pagination.paginate_queryset(self.queryset, request) 
-        serializer = ArticlesSerializers(results, many=True)
-        return pagination.get_paginated_response(serializer.data)
+        serializer = ArticlesSerializers(self.queryset, many=True)
+        return Response(serializer.data)
  
  
     def create(self, request):
@@ -72,17 +70,14 @@ class BooksViewList(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]    
     queryset = Books.objects.all().order_by('-date_updated')
     serializer_class = BooksSerializers
-    pagination_class = CustomPagination
- 
+
     def get_object(self, queryset=None, **kwargs):
         work = self.kwargs.get('pk')
         return get_object_or_404(Books, slug=work)
 
     def list(self, request):
-        pagination = PaginationClass()
-        results = pagination.paginate_queryset(self.queryset, request) 
-        serializer = BooksSerializers(results, many=True)
-        return pagination.get_paginated_response(serializer.data)
+        serializer = BooksSerializers(self.queryset, many=True)
+        return Response(serializer.data, status=200)
  
  
     def create(self, request):
@@ -96,19 +91,15 @@ class PresentationsViewList(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]    
     queryset = Presentations.objects.all().order_by('-date_updated')
     serializer_class = PresentationsSerializers
-    pagination_class = CustomPagination
  
     def get_object(self, queryset=None, **kwargs):
         work = self.kwargs.get('pk')
         return get_object_or_404(Presentations, slug=work)
 
     def list(self, request):
-        pagination = PaginationClass()
-        results = pagination.paginate_queryset(self.queryset, request) 
-        serializer = PresentationsSerializers(results, many=True)
-        return pagination.get_paginated_response(serializer.data)
- 
- 
+        serializer = PresentationsSerializers(self.queryset, many=True)
+        return Response(serializer.data, status=200)
+
     def create(self, request):
         serializer = PresentationsSerializers(data=request.data)
         if serializer.is_valid():
@@ -120,17 +111,14 @@ class ProjectsViewList(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]    
     queryset = Projects.objects.all().order_by('-date_updated')
     serializer_class = ProjectsSerializers
-    pagination_class = CustomPagination
  
     def get_object(self, queryset=None, **kwargs):
         work = self.kwargs.get('pk')
         return get_object_or_404(Projects, slug=work)
 
     def list(self, request):
-        pagination = PaginationClass()
-        results = pagination.paginate_queryset(self.queryset, request) 
-        serializer = ProjectsSerializers(results, many=True)
-        return pagination.get_paginated_response(serializer.data)
+        serializer = ProjectsSerializers(self.queryset, many=True)
+        return Response(serializer.data, status=200)
  
  
     def create(self, request):
@@ -144,17 +132,14 @@ class EventsViewList(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]    
     queryset = Events.objects.all().order_by('-date_updated')
     serializer_class = EventsSerializers
-    pagination_class = CustomPagination
  
     def get_object(self, queryset=None, **kwargs):
         work = self.kwargs.get('pk')
         return get_object_or_404(Events, slug=work)
 
     def list(self, request):
-        pagination = PaginationClass()
-        results = pagination.paginate_queryset(self.queryset, request) 
-        serializer = EventsSerializers(results, many=True)
-        return pagination.get_paginated_response(serializer.data)
+        serializer = EventsSerializers(self.queryset, many=True)
+        return Response(serializer.data)
  
  
     def create(self, request):
@@ -168,18 +153,15 @@ class VideosViewList(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]    
     queryset = Videos.objects.all().order_by('-date_updated')
     serializer_class = VideosSerializers
-    pagination_class = CustomPagination
  
     def get_object(self, queryset=None, **kwargs):
         work = self.kwargs.get('pk')
         return get_object_or_404(Videos, slug=work)
 
     def list(self, request):
-        pagination = PaginationClass()
-        results = pagination.paginate_queryset(self.queryset, request) 
-        serializer = VideosSerializers(results, many=True)
-        return pagination.get_paginated_response(serializer.data)
- 
+        print(self.queryset)
+        serializer = VideosSerializers(Videos.objects.all().order_by('-date_updated'), many=True)
+        return Response(serializer.data)
  
     def create(self, request):
         serializer = VideosSerializers(data=request.data)

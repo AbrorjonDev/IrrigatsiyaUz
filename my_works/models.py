@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
-
+import re
+from .validators import validate_file_extension
 
 class Articles(models.Model):
     name = models.CharField(max_length=500, blank=True)
@@ -115,7 +116,7 @@ class Events(models.Model):
 
 class Videos(models.Model):
     name = models.CharField(max_length=500, blank=True)
-    file = models.FileField(blank=True, null=True, upload_to='videos')
+    file = models.FileField(blank=True, null=True, upload_to='videos', validators=[validate_file_extension])
     link = models.URLField(blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date_published = models.DateTimeField(auto_now_add=True)

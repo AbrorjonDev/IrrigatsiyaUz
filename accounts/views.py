@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Profile
+from .models import Contact
 from .forms import ContactForm
 from django.contrib import messages
 
@@ -50,11 +51,14 @@ def contact_view(request):
             subject = form.cleaned_data.get('subject')
             email = form.cleaned_data.get('email')
             message = form.cleaned_data.get('message')
+            phone = form.cleaned_data.get('phone')
             recipient_list = ['abrorjonaxmadov21@gmail.com']
             if subject and email and message:
                 try:
-                    message_block = f'Hey Mr.\n {subject} has sent this email message lastly.\n\n\nThis User\'s Message:\n{message}'
+                    message_block = f'Hey Mr.\n {subject} has sent this email message lastly.\n\n\nThis User\'s Message:\n{message}/n/n/nFor the Contact<bold>{phone}</bold>'
                     send_mail(subject, message_block, email, recipient_list)
+                    contact_info = Contact.objects.create(email=email, subject=subject, phone=phone, message=message)
+                    contact_info.save()
                 except BadHeaderError:
                     return messages.warning(request, 'Please try again..')
                 return redirect('contact-thanks')
