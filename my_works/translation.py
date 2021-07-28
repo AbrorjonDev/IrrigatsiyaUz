@@ -7,26 +7,26 @@ class ArticleTranslation(TranslationOptions):
 translator.register(Articles, ArticleTranslation)
 
 class BookTranslation(TranslationOptions):
-    fields = ('name',)
+    fields = ('name','file')
 
 translator.register(Books, BookTranslation)
 
 class PresentationsTranslation(TranslationOptions):
-    fields = ('name',)
+    fields = ('name','file')
 
 translator.register(Presentations, PresentationsTranslation)
 
 class ProjectsTranslation(TranslationOptions):
-    fields = ('name',)
+    fields = ('name','file')
  
 translator.register(Projects, ProjectsTranslation)
 
 class EventsTranslation(TranslationOptions):
-    fields = ('name',)
+    fields = ('name','file')
 
 translator.register(Events, EventsTranslation)
 
 class VideosTranslation(TranslationOptions):
-    fields = ('name',)
+    fields = ('name','file')
 
 translator.register(Videos, VideosTranslation)

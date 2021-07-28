@@ -7,7 +7,6 @@ from .views import (
     ProjectsViewList,
     EventsViewList,
     VideosViewList,
-    home,
     )
 from rest_framework import routers
 
