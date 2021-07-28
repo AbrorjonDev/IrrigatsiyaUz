@@ -13,7 +13,7 @@ class ArticlesSerializers(serializers.ModelSerializer):
     class Meta:
         model = Articles
         fields = ('slug', 'name','name_uz', 'name_en','name_ru',  
-                'file', 'link', 'author', 
+                'file','file_uz', 'file_en','file_ru', 'link', 'author', 
                 'date_published', 'date_updated')
         extra_kwargs = {
             'date_published':{'read_only':True},
@@ -41,7 +41,7 @@ class BooksSerializers(serializers.ModelSerializer):
     class Meta:
         model = Books
         fields = ('slug', 'name','name_uz', 'name_en','name_ru', 
-                'file', 'link', 'author', 
+                'file','file_uz', 'file_en','file_ru', 'link', 'author', 
                 'date_published', 'date_updated')
         extra_kwargs = {
             'date_published':{'read_only':True},
@@ -67,7 +67,7 @@ class PresentationsSerializers(serializers.ModelSerializer):
     class Meta:
         model = Presentations
         fields = ('slug', 'name','name_uz', 'name_en','name_ru',  
-            'file', 'link', 'author', 
+            'file', 'file_uz', 'file_en','file_ru', 'link', 'author', 
             'date_published', 'date_updated')
         extra_kwargs = {
             'date_published':{'read_only':True},
@@ -93,7 +93,7 @@ class ProjectsSerializers(serializers.ModelSerializer):
     class Meta:
         model = Projects
         fields = ('slug', 'name','name_uz', 'name_en','name_ru', 
-                'file', 'link', 'author', 
+                'file', 'file_uz', 'file_en','file_ru', 'link', 'author', 
                 'date_published', 'date_updated')
         extra_kwargs = {
             'date_published':{'read_only':True},
@@ -120,7 +120,7 @@ class EventsSerializers(serializers.ModelSerializer):
     class Meta:
         model = Events
         fields = ('slug', 'name','name_uz', 'name_en','name_ru', 
-                'file', 'link', 'author', 
+                'file', 'file_uz', 'file_en','file_ru', 'link', 'author', 
                 'date_published', 'date_updated')
         extra_kwargs = {
             'date_published':{'read_only':True},
@@ -147,7 +147,7 @@ class VideosSerializers(serializers.ModelSerializer):
     class Meta:
         model = Videos
         fields = ('slug', 'name','name_uz', 'name_en','name_ru', 
-            'file', 'link', 'author', 
+            'file', 'file_uz', 'file_en','file_ru', 'link', 'author', 
             'date_published', 'date_updated')
         extra_kwargs = {
             'date_published':{'read_only':True},
