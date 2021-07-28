@@ -57,7 +57,7 @@ class ArticlesViewList(viewsets.ModelViewSet):
         return get_object_or_404(Articles, slug=work)
 
     def list(self, request):
-        serializer = ArticlesSerializers(self.queryset, many=True)
+        serializer = ArticlesSerializers(Articles.objects.all().order_by('-date_updated'), many=True)
         return Response(serializer.data)
  
  
@@ -77,7 +77,7 @@ class BooksViewList(viewsets.ModelViewSet):
         return get_object_or_404(Books, slug=work)
 
     def list(self, request):
-        serializer = BooksSerializers(self.queryset, many=True)
+        serializer = BooksSerializers(Books.objects.all().order_by('-date_updated'), many=True)
         return Response(serializer.data, status=200)
  
  
@@ -98,7 +98,7 @@ class PresentationsViewList(viewsets.ModelViewSet):
         return get_object_or_404(Presentations, slug=work)
 
     def list(self, request):
-        serializer = PresentationsSerializers(self.queryset, many=True)
+        serializer = PresentationsSerializers(Presentations.objects.all().order_by('-date_updated'), many=True)
         return Response(serializer.data, status=200)
 
     def create(self, request):
@@ -118,7 +118,7 @@ class ProjectsViewList(viewsets.ModelViewSet):
         return get_object_or_404(Projects, slug=work)
 
     def list(self, request):
-        serializer = ProjectsSerializers(self.queryset, many=True)
+        serializer = ProjectsSerializers(Projects.objects.all().order_by('-date_updated'), many=True)
         return Response(serializer.data, status=200)
  
  
@@ -139,7 +139,7 @@ class EventsViewList(viewsets.ModelViewSet):
         return get_object_or_404(Events, slug=work)
 
     def list(self, request):
-        serializer = EventsSerializers(self.queryset, many=True)
+        serializer = EventsSerializers(Projects.objects.all().order_by('-date_updated'), many=True)
         return Response(serializer.data)
  
  
