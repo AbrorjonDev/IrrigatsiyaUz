@@ -33,20 +33,7 @@ class IsOwnerOrReadOnly(BasePermission):
             return True
 
         return object.author == request.user
-def home(request):
-    
-    trans = translate(language='ru')
-    print(trans)
-    return HttpResponse(trans)
 
-def translate(language):
-    cur_lang = get_language()
-    try:
-        activate(language)
-        text = gettext('test funksiya')
-    finally:
-        activate(cur_lang)
-    return text
 class ArticlesViewList(viewsets.ModelViewSet):
     permission_classes = [ IsOwnerOrReadOnly, IsAuthenticatedOrReadOnly]    
     queryset = Articles.objects.all().order_by('-date_updated')
