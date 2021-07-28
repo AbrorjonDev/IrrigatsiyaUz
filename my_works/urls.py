@@ -20,8 +20,6 @@ router.register(r'projects', ProjectsViewList, basename='projects')
 router.register(r'events', EventsViewList, basename='events')
 router.register(r'videos', VideosViewList, basename='videos')
 
-urlpatterns = [
-    path('home/', home, name="home"),
-]
+urlpatterns = []
 
 urlpatterns += router.urls
