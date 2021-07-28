@@ -1,21 +1,21 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
-import re
 from .validators import validate_file_extension
+from django.utils.translation import gettext_lazy as _
 
 class Articles(models.Model):
-    name = models.CharField(max_length=500, blank=True)
-    file = models.FileField(blank=True, null=True, upload_to='articles')
-    link = models.URLField(blank=True, null=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(_('name'), max_length=500, blank=True)
+    file = models.FileField(_('File'), blank=True, null=True, upload_to='articles')
+    link = models.URLField(_('Link'), blank=True, null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Author') )
     date_published = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
-    slug = models.SlugField(blank=False, null=False, unique=True, max_length=500)
+    slug = models.SlugField(_('Slug'), blank=False, null=False, unique=True, max_length=500)
 
     class Meta:
-        verbose_name = 'Article'
-        verbose_name_plural = 'Articles'
+        verbose_name = _('Article')
+        verbose_name_plural = _('Articles')
     
     def __str__(self):
         return f'{self.name}'
@@ -27,17 +27,17 @@ class Articles(models.Model):
 
 
 class Books(models.Model):
-    name = models.CharField(max_length=500, blank=True)
-    file = models.FileField(blank=True, null=True, upload_to='books')
-    link = models.URLField(blank=True, null=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(_('Name'), max_length=500, blank=True)
+    file = models.FileField(_('File'), blank=True, null=True, upload_to='books')
+    link = models.URLField(_('Link'), blank=True, null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Author') )
     date_published = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
-    slug = models.SlugField(blank=False, null=False, unique=True, max_length=500)
+    slug = models.SlugField(_('Slug'), blank=False, null=False, unique=True, max_length=500)
 
     class Meta:
-        verbose_name = 'Book'
-        verbose_name_plural = 'Books'
+        verbose_name = _('Book')
+        verbose_name_plural = _('Books')
     
     def __str__(self):
         return f'{self.name}'
@@ -49,17 +49,17 @@ class Books(models.Model):
 
 
 class Presentations(models.Model):
-    name = models.CharField(max_length=500, blank=True)
-    file = models.FileField(blank=True, null=True, upload_to='presentations')
-    link = models.URLField(blank=True, null=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(_('Name'), max_length=500, blank=True)
+    file = models.FileField(_('File'), blank=True, null=True, upload_to='presentations')
+    link = models.URLField(_('Link'), blank=True, null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Author') )
     date_published = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
-    slug = models.SlugField(blank=False, null=False, unique=True, max_length=500)
+    slug = models.SlugField(_('Slug'), blank=False, null=False, unique=True, max_length=500)
 
     class Meta:
-        verbose_name = 'Presentation'
-        verbose_name_plural = 'Presentations'
+        verbose_name = _('Presentation')
+        verbose_name_plural = _('Presentations')
     
     def __str__(self):
         return f'{self.name}'
@@ -71,17 +71,17 @@ class Presentations(models.Model):
 
 
 class Projects(models.Model):
-    name = models.CharField(max_length=500, blank=True)
-    file = models.FileField(blank=True, null=True, upload_to='projects')
-    link = models.URLField(blank=True, null=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(_('Name'), max_length=500, blank=True)
+    file = models.FileField(_('File'), blank=True, null=True, upload_to='projects')
+    link = models.URLField(_('Link'), blank=True, null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Author') )
     date_published = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
-    slug = models.SlugField(blank=False, null=False, unique=True, max_length=500)
+    slug = models.SlugField(_('Slug'), blank=False, null=False, unique=True, max_length=500)
 
     class Meta:
-        verbose_name = 'Project'
-        verbose_name_plural = 'Projects'
+        verbose_name = _('Project')
+        verbose_name_plural = _('Projects')
     
     def __str__(self):
         return f'{self.name}'
@@ -93,17 +93,17 @@ class Projects(models.Model):
 
 
 class Events(models.Model):
-    name = models.CharField(max_length=500, blank=True)
-    file = models.FileField(blank=True, null=True, upload_to='events')
-    link = models.URLField(blank=True, null=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(_('Name'), max_length=500, blank=True)
+    file = models.FileField(_('File'), blank=True, null=True, upload_to='events')
+    link = models.URLField(_('Link'), blank=True, null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Author') )
     date_published = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
-    slug = models.SlugField(blank=False, null=False, unique=True, max_length=500)
+    slug = models.SlugField(_('Slug'), blank=False, null=False, unique=True, max_length=500)
 
     class Meta:
-        verbose_name = 'Event'
-        verbose_name_plural = 'Events'
+        verbose_name = _('Event')
+        verbose_name_plural = _('Events')
     
     def __str__(self):
         return f'{self.name}'
@@ -115,17 +115,17 @@ class Events(models.Model):
 
 
 class Videos(models.Model):
-    name = models.CharField(max_length=500, blank=True)
-    file = models.FileField(blank=True, null=True, upload_to='videos', validators=[validate_file_extension])
-    link = models.URLField(blank=True, null=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(_('Name'), max_length=500, blank=True)
+    file = models.FileField(_('File'), blank=True, null=True, upload_to='videos', validators=[validate_file_extension])
+    link = models.URLField(_('Link'), blank=True, null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Author') )
     date_published = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
-    slug = models.SlugField(blank=False, null=False, unique=True, max_length=500)
-
+    slug = models.SlugField(_('Slug'), blank=False, null=False, unique=True, max_length=500)
+ 
     class Meta:
-        verbose_name = 'Video'
-        verbose_name_plural = 'Videos'
+        verbose_name = _('Video')
+        verbose_name_plural = _('Videos')
     
     def __str__(self):
         return f'{self.name}'

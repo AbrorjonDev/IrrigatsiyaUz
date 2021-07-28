@@ -2,13 +2,14 @@ from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
 from phonenumber_field.modelfields import PhoneNumberField
+from django.utils.translation import gettext_lazy as _
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    faculty = models.CharField(max_length=300)
-    cafedra = models.CharField(max_length=300)
-    level = models.CharField(max_length=200)
-    avatar = models.ImageField(default="profile_img.jpeg", upload_to="profile_pics")
+    faculty = models.CharField(_('faculty'), max_length=300)
+    cafedra = models.CharField(_('cafedra'), max_length=300)
+    level = models.CharField(_('level'), max_length=200)
+    avatar = models.ImageField(_('avatar'), default="profile_img.jpeg", upload_to="profile_pics")
 
     def __str__(self):
         return f'{self.user.username} Profile' 
@@ -23,7 +24,7 @@ class Profile(models.Model):
             img.thumbnail(output)
             img.save(self.avatar.path)
 
-
+ 
 class Contact(models.Model):
     email = models.EmailField()
     phone = PhoneNumberField()
@@ -32,8 +33,8 @@ class Contact(models.Model):
     date_sent = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        verbose_name = 'Xabar'
-        verbose_name_plural = 'Xabarlar'
+        verbose_name = _('Contact Message')
+        verbose_name_plural = _('Contact Messages') 
     
     def __str__(self):
         return f'{self.subject}'
@@ -43,8 +44,8 @@ class AdminContactPhones(models.Model):
     phone = PhoneNumberField()
     class Meta:
         managed = True
-        verbose_name = 'Contact Phone'
-        verbose_name_plural = 'Contact Phones'
+        verbose_name = _('Contact Phone')
+        verbose_name_plural = _('Contact Phones')
     
     def __str__(self):
         return self.phone

@@ -1,16 +1,12 @@
+from IrrigatsiyaUz.settings import LANGUAGES
 from django.shortcuts import render, get_object_or_404
-from rest_framework import serializers, status
-from rest_framework.views import APIView
-from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
-from rest_framework.pagination import PageNumberPagination
-from django.http import Http404
+from django.http import Http404, HttpResponse
 
-from rest_framework import permissions, pagination
+from rest_framework import permissions
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, BasePermission
 from rest_framework import viewsets
-from .paginations import CustomPagination
-import re
+
 
 from .models import (
     Articles,
@@ -37,15 +33,20 @@ class IsOwnerOrReadOnly(BasePermission):
             return True
 
         return object.author == request.user
+def home(request):
+    
+    trans = translate(language='ru')
+    print(trans)
+    return HttpResponse(trans)
 
-
-# class PaginationClass(PageNumberPagination):
-#     page_query_param = 'p'
-#     page_size = 10
-#     page_size_query_param = 'page_size'
-#     max_page_size = 10
-
-
+def translate(language):
+    cur_lang = get_language()
+    try:
+        activate(language)
+        text = gettext('test funksiya')
+    finally:
+        activate(cur_lang)
+    return text
 class ArticlesViewList(viewsets.ModelViewSet):
     permission_classes = [ IsOwnerOrReadOnly, IsAuthenticatedOrReadOnly]    
     queryset = Articles.objects.all().order_by('-date_updated')
@@ -147,6 +148,10 @@ class EventsViewList(viewsets.ModelViewSet):
         if serializer.is_valid():
             serializer.save()
         return Response(serializer.data)
+
+from django.utils.translation import get_language, activate, gettext
+from django.conf import settings
+
 
 
 class VideosViewList(viewsets.ModelViewSet):

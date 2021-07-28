@@ -1,9 +1,7 @@
 from rest_framework import serializers
-from .models import Profile
+from .models import Profile, Contact
 from django.contrib.auth.validators import UnicodeUsernameValidator
-from django.contrib.auth.models import User
-from drf_writable_nested.serializers import WritableNestedModelSerializer #for updating profile 
- 
+from django.contrib.auth.models import User 
  
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,3 +34,12 @@ class ProfileSerializer(serializers.ModelSerializer):
         instance.avatar = validated_data.get('avatar', instance.avatar)
         instance.save()
         return instance
+ 
+
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact
+        fields = ('subject', 'email', 'phone', 'message')
+
+    def create(self, validated_data):
+        return Contact.objects.create(**validated_data)

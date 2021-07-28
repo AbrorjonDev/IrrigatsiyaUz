@@ -12,12 +12,13 @@ class ArticlesSerializers(serializers.ModelSerializer):
      
     class Meta:
         model = Articles
-        fields = ('slug', 'name', 
+        fields = ('slug', 'name','name_uz', 'name_en','name_ru',  
                 'file', 'link', 'author', 
                 'date_published', 'date_updated')
         extra_kwargs = {
             'date_published':{'read_only':True},
             'slug':{'read_only':True},
+            'author':{'read_only':True},
 
             }
 
@@ -39,7 +40,7 @@ class BooksSerializers(serializers.ModelSerializer):
      
     class Meta:
         model = Books
-        fields = ('slug', 'name', 
+        fields = ('slug', 'name','name_uz', 'name_en','name_ru', 
                 'file', 'link', 'author', 
                 'date_published', 'date_updated')
         extra_kwargs = {
@@ -65,13 +66,13 @@ class PresentationsSerializers(serializers.ModelSerializer):
      
     class Meta:
         model = Presentations
-        fields = ('slug', 'name', 
-                'file', 'link', 'author', 
-                'date_published', 'date_updated')
+        fields = ('slug', 'name','name_uz', 'name_en','name_ru',  
+            'file', 'link', 'author', 
+            'date_published', 'date_updated')
         extra_kwargs = {
             'date_published':{'read_only':True},
             'slug':{'read_only':True},
-
+            'author':{'read_only':True},
             }
     def create(self, validated_data):
         return Presentations.objects.create(**validated_data, author_id=1)         
@@ -91,12 +92,13 @@ class ProjectsSerializers(serializers.ModelSerializer):
      
     class Meta:
         model = Projects
-        fields = ('slug', 'name', 
+        fields = ('slug', 'name','name_uz', 'name_en','name_ru', 
                 'file', 'link', 'author', 
                 'date_published', 'date_updated')
         extra_kwargs = {
             'date_published':{'read_only':True},
             'slug':{'read_only':True},
+            'author':{'read_only':True},
 
             }
     def create(self, validated_data):
@@ -117,12 +119,13 @@ class EventsSerializers(serializers.ModelSerializer):
      
     class Meta:
         model = Events
-        fields = ('slug', 'name', 
+        fields = ('slug', 'name','name_uz', 'name_en','name_ru', 
                 'file', 'link', 'author', 
                 'date_published', 'date_updated')
         extra_kwargs = {
             'date_published':{'read_only':True},
             'slug':{'read_only':True},
+            'author':{'read_only':True}
 
             }
     def create(self, validated_data):
@@ -143,12 +146,13 @@ class VideosSerializers(serializers.ModelSerializer):
      
     class Meta:
         model = Videos
-        fields = ('slug', 'name', 
-                'file', 'link', 'author', 
-                'date_published', 'date_updated')
+        fields = ('slug', 'name','name_uz', 'name_en','name_ru', 
+            'file', 'link', 'author', 
+            'date_published', 'date_updated')
         extra_kwargs = {
             'date_published':{'read_only':True},
             'slug':{'read_only':True},
+            'author':{'read_only':True}
             }
 
     def link_management(self, validated_data):
@@ -178,3 +182,4 @@ class VideosSerializers(serializers.ModelSerializer):
         instance.date_updated = validated_data.get('date_updated', instance.date_updated)
         instance.save()
         return instance
+

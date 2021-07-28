@@ -1,0 +1,152 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-07-28 13:31+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: IrrigatsiyaUz/settings.py:148
+msgid "Uzbek"
+msgstr ""
+
+#: IrrigatsiyaUz/settings.py:149
+msgid "Russian"
+msgstr ""
+
+#: IrrigatsiyaUz/settings.py:150
+msgid "English"
+msgstr ""
+
+#: accounts/apps.py:9
+msgid "Accounts"
+msgstr "Akount"
+
+#: accounts/models.py:9
+msgid "faculty"
+msgstr "fakultet"
+
+#: accounts/models.py:10
+msgid "cafedra"
+msgstr "kafedra"
+
+#: accounts/models.py:11
+msgid "level"
+msgstr "unvon"
+
+#: accounts/models.py:12
+msgid "avatar"
+msgstr "avatar"
+
+#: accounts/models.py:36
+msgid "Contact Message"
+msgstr "Xabar"
+
+#: accounts/models.py:37
+msgid "Contact Messages"
+msgstr "Xabarlar"
+
+#: accounts/models.py:47
+msgid "Contact Phone"
+msgstr "Telefon Raqam"
+
+#: accounts/models.py:48
+msgid "Contact Phones"
+msgstr "Telefon Raqamlar"
+
+#: my_works/apps.py:7
+msgid "My Works"
+msgstr "Mening ishlarim"
+
+#: my_works/models.py:8
+msgid "name"
+msgstr "Nomi"
+
+#: my_works/models.py:9 my_works/models.py:31 my_works/models.py:53
+#: my_works/models.py:75 my_works/models.py:97 my_works/models.py:119
+msgid "File"
+msgstr "Fayl"
+
+#: my_works/models.py:10 my_works/models.py:32 my_works/models.py:54
+#: my_works/models.py:76 my_works/models.py:98 my_works/models.py:120
+msgid "Link"
+msgstr "Havola"
+
+#: my_works/models.py:11 my_works/models.py:33 my_works/models.py:55
+#: my_works/models.py:77 my_works/models.py:99 my_works/models.py:121
+msgid "Author"
+msgstr "Muallif"
+
+#: my_works/models.py:14 my_works/models.py:36 my_works/models.py:58
+#: my_works/models.py:80 my_works/models.py:102 my_works/models.py:124
+msgid "Slug"
+msgstr "Slug"
+
+#: my_works/models.py:17
+msgid "Article"
+msgstr "Maqola"
+
+#: my_works/models.py:18
+msgid "Articles"
+msgstr "Maqolalar"
+
+#: my_works/models.py:30 my_works/models.py:52 my_works/models.py:74
+#: my_works/models.py:96 my_works/models.py:118
+msgid "Name"
+msgstr "Nomi"
+
+#: my_works/models.py:39
+msgid "Book"
+msgstr "Kitob"
+
+#: my_works/models.py:40
+msgid "Books"
+msgstr "Kitoblar"
+
+#: my_works/models.py:61
+msgid "Presentation"
+msgstr "Taqdimot"
+
+#: my_works/models.py:62
+msgid "Presentations"
+msgstr "Taqdimotlar"
+
+#: my_works/models.py:83
+msgid "Project"
+msgstr "Loyiha"
+
+#: my_works/models.py:84
+msgid "Projects"
+msgstr "Loyihalar"
+
+#: my_works/models.py:105
+msgid "Event"
+msgstr "Tadbir"
+
+#: my_works/models.py:106
+msgid "Events"
+msgstr "Tadbirlar"
+
+#: my_works/models.py:127
+msgid "Video"
+msgstr "Video"
+
+#: my_works/models.py:128
+msgid "Videos"
+msgstr "videolar"
+
+#: my_works/views.py:46
+msgid "test funksiya"
+msgstr "test funksiya"

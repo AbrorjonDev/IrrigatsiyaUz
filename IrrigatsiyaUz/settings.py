@@ -21,6 +21,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -35,13 +36,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_cleanup',
     'django_filters',
-    'djoser',
     'rest_framework.authtoken',
     'corsheaders',
     'phonenumber_field',
     'drf_yasg',
     'whitenoise',
-    'translation_manager',
 
 ]
 
@@ -53,8 +52,8 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     "django.middleware.locale.LocaleMiddleware", #for multi language
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -140,14 +139,17 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
+MODELTRANSLATION_FALLBACK_LANGUAGES = ('en', 'uz', )
+MODELTRANSLATION_PREPOPULATE_LANGUAGES = ('en')
 
 LANGUAGES = (
     ("uz", _('Uzbek')),
     ("ru", _('Russian')),
-    ("en-us", _('English')),
+    ("en", _('English')),
 )
-
+LANGUAGE_CODE = 'uz'
 TIME_ZONE = 'Asia/Tashkent'
 
 USE_I18N = True
@@ -156,7 +158,7 @@ USE_L10N = True
 
 #  Contains the path list where Django should look into for django.po files for all supported languages
 LOCALE_PATHS = (
-    os.path.join(BASE_DIR, 'locale'),
+    os.path.join(BASE_DIR, "locale"),
 )
 
 USE_TZ = True
