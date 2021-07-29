@@ -126,7 +126,7 @@ class EventsViewList(viewsets.ModelViewSet):
         return get_object_or_404(Events, slug=work)
 
     def list(self, request):
-        serializer = EventsSerializers(Projects.objects.all().order_by('-date_updated'), many=True)
+        serializer = EventsSerializers(Events.objects.all().order_by('-date_updated'), many=True)
         return Response(serializer.data)
  
  
@@ -151,7 +151,6 @@ class VideosViewList(viewsets.ModelViewSet):
         return get_object_or_404(Videos, slug=work)
 
     def list(self, request):
-        print(self.queryset)
         serializer = VideosSerializers(Videos.objects.all().order_by('-date_updated'), many=True)
         return Response(serializer.data)
  

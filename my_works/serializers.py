@@ -169,7 +169,11 @@ class VideosSerializers(serializers.ModelSerializer):
     def create(self, validated_data):
         name = validated_data.get('name')
         file = validated_data.get('file')
-        return Videos.objects.create(name=name, file=file, link=self.link_management(validated_data=validated_data), author_id=1)         
+        file_en = validated_data.get('file_en')
+        file_uz = validated_data.get('file_uz')
+        file_ru = validated_data.get('file_ru')
+
+        return Videos.objects.create(name=name, file=file,file_en=file_en,file_uz=file_uz,file_ru=file_ru, link=self.link_management(validated_data=validated_data), author_id=1)         
     
 
     def update(self, instance, validated_data):
