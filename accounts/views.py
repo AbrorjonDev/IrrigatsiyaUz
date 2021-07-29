@@ -1,15 +1,13 @@
 from django.shortcuts import render, redirect
 from .models import Profile
 from .models import Contact
-from .forms import ContactForm
 from django.contrib import messages
 
 from rest_framework.response import Response
-from .serializers import ContactSerializer, ProfileSerializer
+from .serializers import ContactSerializer, ProfileSerializer, User, UserSerializer
 from rest_framework import permissions, viewsets
 
 from django.core.mail import send_mail, BadHeaderError
-from django.http import HttpResponse
 from django.contrib import messages
 
 
@@ -29,7 +27,7 @@ class ProfileView(viewsets.ModelViewSet):
     def get_object(self, **kwargs):
         return Profile.objects.first() 
 
-    def retrieve(self, request, **kwargs):
+    def list(self, request, **kwargs):
         profile = self.get_object()
         serializer = ProfileSerializer(profile)
         return Response(serializer.data)
@@ -40,7 +38,16 @@ class ProfileView(viewsets.ModelViewSet):
         profile = self.get_object()
         serializer = ProfileSerializer(profile, data=request.data)
         if serializer.is_valid(raise_exception=True):
+            user = dict(serializer.validated_data.get('user'))
+            updated_user = User.objects.get(id=1)
+            updated_user.first_name = user['first_name']
+            print(user)
+            updated_user.last_name = user['last_name']
+            updated_user.email = user['email']
+            updated_user.save()
+            print(User.objects.get(id=1).first_name)
             serializer.save()
+
             return Response(serializer.data, status=200)
         return Response(serializer.errors)
 class ContactAPIView(viewsets.ModelViewSet):
