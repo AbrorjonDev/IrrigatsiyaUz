@@ -48,4 +48,17 @@ class AdminContactPhones(models.Model):
         verbose_name_plural = _('Contact Phones')
     
     def __str__(self):
-        return self.phone
+        return f'{self.phone}'
+
+class AddressLink(models.Model):
+    name = models.CharField(_('name'), max_length=500)
+    link = models.URLField(blank=False, null=False)
+
+    class Meta:
+        verbose_name = _('Address Link')
+        verbose_name_plural = _('Address Links')
+
+    def __str__(self):
+        return self.name
+    
+

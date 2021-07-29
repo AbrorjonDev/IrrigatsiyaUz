@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Profile, Contact
+from .models import Profile, Contact, AddressLink, AdminContactPhones
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.contrib.auth.models import User 
  
@@ -43,3 +43,13 @@ class ContactSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return Contact.objects.create(**validated_data)
+
+class AdminContactPhonesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AdminContactPhones
+        fields = ('phone',)
+
+class AddressLinkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AddressLink
+        fields = ('name', 'link',)

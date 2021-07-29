@@ -1,13 +1,16 @@
 from django.urls import path, include
-from .views import ContactAPIView, ProfileView
+from .views import ContactAPIView, ProfileView, AdminContactView, AddressLinkView
 from rest_framework import routers
 from django.contrib.auth import views as auth_views
 from rest_framework.authtoken.views import obtain_auth_token
 
 
 router = routers.DefaultRouter()
+router.register(r'phones',AdminContactView, basename='phone')
+router.register(r'addresses',AddressLinkView, basename='addresses')
 router.register(r'contact',ContactAPIView, basename='contact')
 router.register(r'',ProfileView, basename='profile')
+
 
 urlpatterns = [
     path('auth-token/', obtain_auth_token, name='token-auth'),

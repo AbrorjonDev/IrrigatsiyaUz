@@ -1,15 +1,18 @@
-from django.shortcuts import render, redirect
-from .models import Profile
-from .models import Contact
+from .models import Profile, Contact, AdminContactPhones, AddressLink
 from django.contrib import messages
 
 from rest_framework.response import Response
-from .serializers import ContactSerializer, ProfileSerializer, User, UserSerializer
+from .serializers import (
+    ContactSerializer, 
+    ProfileSerializer, 
+    User, 
+    AddressLinkSerializer, 
+    AdminContactPhonesSerializer
+)
 from rest_framework import permissions, viewsets
 
 from django.core.mail import send_mail, BadHeaderError
 from django.contrib import messages
-
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, object):
@@ -41,16 +44,15 @@ class ProfileView(viewsets.ModelViewSet):
             user = dict(serializer.validated_data.get('user'))
             updated_user = User.objects.get(id=1)
             updated_user.first_name = user['first_name']
-            print(user)
             updated_user.last_name = user['last_name']
             updated_user.email = user['email']
             updated_user.save()
-            print(User.objects.get(id=1).first_name)
             serializer.save()
 
             return Response(serializer.data, status=200)
         return Response(serializer.errors)
 class ContactAPIView(viewsets.ModelViewSet):
+
     permission_classes = [permissions.AllowAny]
     serializer_class = ContactSerializer
     http_method_names = ['post', 'head']
@@ -74,3 +76,22 @@ class ContactAPIView(viewsets.ModelViewSet):
                 Response({'response':'E\'tiboringiz uchun rahmat!Tez orada siz bilan bog\'lanamiz..'})
 
         return Response({'response':'Xabar jo\'natildi.'})
+
+class AdminContactView(viewsets.ModelViewSet):
+    http_method_names = ['get', 'head']
+    queryset = AdminContactPhones.objects.all()
+    serializer_class = AdminContactPhonesSerializer
+
+    def list(self, request, *args, **kwargs):
+        serializer = self.get_serializer(self.queryset, many=True)
+        return Response(serializer.data, status=200)
+
+class AddressLinkView(viewsets.ModelViewSet):
+    http_method_names = ['get', 'head']
+    queryset = AddressLink.objects.all()
+    serializer_class = AddressLinkSerializer
+
+    def list(self, request, *args, **kwargs):
+        serializer = self.get_serializer(self.queryset, many=True)
+        return Response(serializer.data, status=200)
+
