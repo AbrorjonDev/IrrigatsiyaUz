@@ -31,13 +31,18 @@ class Contact(models.Model):
     subject = models.CharField(max_length=30)
     message = models.TextField()
     date_sent = models.DateTimeField(auto_now_add=True)
-
+    status = models.BooleanField(default=False)
     class Meta:
         verbose_name = _('Contact Message')
         verbose_name_plural = _('Contact Messages') 
     
     def __str__(self):
         return f'{self.subject}'
+
+    def message_seen(self, *args, **kwargs):
+        self.status = True
+        super(Contact, self).save(*args, **kwargs)
+
     
 
 class AdminContactPhones(models.Model):

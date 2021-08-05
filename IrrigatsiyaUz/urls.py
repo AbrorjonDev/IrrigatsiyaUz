@@ -9,6 +9,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 from django.conf.urls.i18n import i18n_patterns
+from accounts.views import seen_message
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -33,10 +34,12 @@ urlpatterns = [
     
 ]
 urlpatterns +=i18n_patterns (
-    path('admin/', admin.site.urls),
     path('', include('my_works.urls')),
     path('me/', include('accounts.urls')),
-    prefix_default_language=False,
+    
+    path('admin/', admin.site.urls),
+    
+    # prefix_default_language=False,
 )
 
 urlpatterns+= (static(settings.STATIC_URL, document_root=settings.STATIC_ROOT))

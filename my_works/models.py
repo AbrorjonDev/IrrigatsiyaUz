@@ -113,10 +113,10 @@ class Events(models.Model):
             self.slug = slugify(self.name)
         return super(Events,self).save(*args, **kwargs)
 
-
+from django.core.validators import FileExtensionValidator
 class Videos(models.Model):
     name = models.CharField(_('Name'), max_length=500, blank=True)
-    file = models.FileField(_('File'), blank=True, null=True, upload_to='videos', validators=[validate_file_extension])
+    file = models.FileField(_('File'), blank=True, null=True, upload_to='videos', validators=[FileExtensionValidator(allowed_extensions=['mp4', 'avi', 'mov', 'ogg', 'webM'])])
     link = models.URLField(_('Link'), blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_('Author') )
     date_published = models.DateTimeField(auto_now_add=True)
@@ -130,9 +130,21 @@ class Videos(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+    def link_management(self):
+
+        if self.link:
+            if not self.link.find('https://youtube.com/embed/'):
+                return self.link  
+            elif self.link.find('youtu.be'):
+                res = self.link.find('youtu.be/')
+                result = self.link[:res] + 'youtube.com/embed/' + self.link[(res+9):]
+                link = result
+                return link
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
+        self.link = self.link_management()
         return super(Videos,self).save(*args, **kwargs)
 
 

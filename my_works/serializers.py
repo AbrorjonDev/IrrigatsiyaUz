@@ -169,17 +169,23 @@ class VideosSerializers(serializers.ModelSerializer):
     def create(self, validated_data):
         name = validated_data.get('name')
         file = validated_data.get('file')
+        name_en = validated_data.get('name_en')
+        name_uz = validated_data.get('name_uz')
+        name_ru = validated_data.get('name_ru')
         file_en = validated_data.get('file_en')
         file_uz = validated_data.get('file_uz')
         file_ru = validated_data.get('file_ru')
 
-        return Videos.objects.create(name=name, file=file,file_en=file_en,file_uz=file_uz,file_ru=file_ru, link=self.link_management(validated_data=validated_data), author_id=1)         
+        return Videos.objects.create(name=name,name_en=name_en,name_uz=name_uz,name_ru=name_ru,file=file, file_en=file_en,file_uz=file_uz,file_ru=file_ru, link=self.link_management(validated_data=validated_data), author_id=1)         
     
 
     def update(self, instance, validated_data):
         
         instance.name = validated_data.get('name', instance.name)
         instance.file = validated_data.get('file', instance.file)
+        instance.file_uz = validated_data.get('file_uz', instance.file_uz)
+        instance.file_ru = validated_data.get('file_ru', instance.file_ru)
+        instance.file_en = validated_data.get('file_en', instance.file_en)
         instance.link = self.link_management(validated_data=validated_data)
         instance.author = validated_data.get('author', instance.author)
         instance.date_published = validated_data.get('date_published', instance.date_published)

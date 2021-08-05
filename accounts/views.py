@@ -1,3 +1,5 @@
+from django.shortcuts import render, reverse
+from rest_framework.generics import get_object_or_404
 from .models import Profile, Contact, AdminContactPhones, AddressLink
 from django.contrib import messages
 
@@ -95,3 +97,9 @@ class AddressLinkView(viewsets.ModelViewSet):
         serializer = self.get_serializer(self.queryset, many=True)
         return Response(serializer.data, status=200)
 
+def seen_message(request, pk):
+    print('ishladi.')
+    object = get_object_or_404(Contact, pk=pk)
+    object.message_seen()
+    object.save()
+    return render(request, 'admin/change_form_object_tools.html', {'value':object})

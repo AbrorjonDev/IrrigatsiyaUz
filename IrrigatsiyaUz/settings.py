@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _  #for multi-language
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -34,7 +35,7 @@ INSTALLED_APPS = [
     
     'crispy_forms',
     'rest_framework',
-    'django_cleanup',
+    # 'django_cleanup',   signals.py added for auto cleaning
     'django_filters',
     'rest_framework.authtoken',
     'corsheaders',
@@ -79,7 +80,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'django.template.context_processors.i18n', 
+                'django.template.context_processors.i18n',
+                'accounts.context_processors.notifications',
             ],
         },
     },

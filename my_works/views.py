@@ -1,12 +1,23 @@
 from IrrigatsiyaUz.settings import LANGUAGES
 from django.shortcuts import render, get_object_or_404
 from rest_framework.response import Response
-from django.http import Http404, HttpResponse
+from django.utils.translation import gettext_lazy as _
 
 from rest_framework import permissions
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, BasePermission
-from rest_framework import viewsets
 
+from django.http import FileResponse
+from rest_framework import viewsets, renderers
+from rest_framework.decorators import action
+
+class PassthroughRenderer(renderers.BaseRenderer):
+    """
+        Return data as-is. View should supply a Response.
+    """
+    media_type = ''
+    format = ''
+    def render(self, data, accepted_media_type=None, renderer_context=None):
+        return data
 
 from .models import (
     Articles,
@@ -34,7 +45,7 @@ class IsOwnerOrReadOnly(BasePermission):
 
         return object.author == request.user
 
-class ArticlesViewList(viewsets.ModelViewSet):
+class ArticlesViewList(viewsets.ModelViewSet, viewsets.ReadOnlyModelViewSet):
     permission_classes = [ IsOwnerOrReadOnly, IsAuthenticatedOrReadOnly]    
     queryset = Articles.objects.all().order_by('-date_updated')
     serializer_class = ArticlesSerializers
@@ -49,12 +60,29 @@ class ArticlesViewList(viewsets.ModelViewSet):
  
  
     def create(self, request):
-        serializer = ArticlesSerializers(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-        return Response(serializer.data)    
+        try:
+            serializer = ArticlesSerializers(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+            return Response(serializer.data)
+        except Exception as e:
+            if e == 'UNIQUE constraint failed: my_works_articles.slug':
+                return Response(_('This name is taken.Choose other one'))
+            return Response(_('Some problems.Please, Try again.'))    
+    
+    @action(methods=['get'], detail=True, renderer_classes=(PassthroughRenderer,))
+    def download(self, *args, **kwargs):
+        instance = self.get_object()
 
-class BooksViewList(viewsets.ModelViewSet):
+        # get an open file handle (I'm just using a file attached to the model for this example):
+        file_handle = instance.file.open()
+
+        # send file
+        response = FileResponse(file_handle, content_type='whatever')
+        response['Content-Length'] = instance.file.size
+        response['Content-Disposition'] = 'attachment; filename="%s"' % instance.file.name
+        return response
+class BooksViewList(viewsets.ModelViewSet, viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]    
     queryset = Books.objects.all().order_by('-date_updated')
     serializer_class = BooksSerializers
@@ -69,13 +97,29 @@ class BooksViewList(viewsets.ModelViewSet):
  
  
     def create(self, request):
-        serializer = BooksSerializers(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-        return Response(serializer.data)
+        try:
+            serializer = BooksSerializers(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+            return Response(serializer.data)
+        except Exception as e:
+            if e == 'UNIQUE constraint failed: my_works_books.slug':
+                return Response(_('This name is taken.Choose other one'))
+            return Response(_('Some problems.Please, Try again.'))
+    @action(methods=['get'], detail=True, renderer_classes=(PassthroughRenderer,))
+    def download(self, *args, **kwargs):
+        instance = self.get_object()
 
+        # get an open file handle (I'm just using a file attached to the model for this example):
+        file_handle = instance.file.open()
 
-class PresentationsViewList(viewsets.ModelViewSet):
+        # send file
+        response = FileResponse(file_handle, content_type='whatever')
+        response['Content-Length'] = instance.file.size
+        response['Content-Disposition'] = 'attachment; filename="%s"' % instance.file.name
+        return response
+
+class PresentationsViewList(viewsets.ModelViewSet, viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]    
     queryset = Presentations.objects.all().order_by('-date_updated')
     serializer_class = PresentationsSerializers
@@ -89,13 +133,29 @@ class PresentationsViewList(viewsets.ModelViewSet):
         return Response(serializer.data, status=200)
 
     def create(self, request):
-        serializer = PresentationsSerializers(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-        return Response(serializer.data)
+        try:
+            serializer = PresentationsSerializers(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+            return Response(serializer.data)
+        except Exception as e:
+            if e == 'UNIQUE constraint failed: my_works_presentations.slug':
+                return Response(_('This name is taken.Choose other one'))
+            return Response(_('Some problems.Please, Try again.'))
+    @action(methods=['get'], detail=True, renderer_classes=(PassthroughRenderer,))
+    def download(self, *args, **kwargs):
+        instance = self.get_object()
 
+        # get an open file handle (I'm just using a file attached to the model for this example):
+        file_handle = instance.file.open()
 
-class ProjectsViewList(viewsets.ModelViewSet):
+        # send file
+        response = FileResponse(file_handle, content_type='whatever')
+        response['Content-Length'] = instance.file.size
+        response['Content-Disposition'] = 'attachment; filename="%s"' % instance.file.name
+        return response
+
+class ProjectsViewList(viewsets.ModelViewSet, viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]    
     queryset = Projects.objects.all().order_by('-date_updated')
     serializer_class = ProjectsSerializers
@@ -110,13 +170,30 @@ class ProjectsViewList(viewsets.ModelViewSet):
  
  
     def create(self, request):
-        serializer = ProjectsSerializers(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-        return Response(serializer.data)
+        try:
+            serializer = ProjectsSerializers(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+            return Response(serializer.data)
+        except Exception as e:
+            if e == 'UNIQUE constraint failed: my_works_projects.slug':
+                return Response(_('This name is taken.Choose other one'))
+            return Response(_('Some problems.Please, Try again.'))
 
+    @action(methods=['get'], detail=True, renderer_classes=(PassthroughRenderer,))
+    def download(self, *args, **kwargs):
+        instance = self.get_object()
 
-class EventsViewList(viewsets.ModelViewSet):
+        # get an open file handle (I'm just using a file attached to the model for this example):
+        file_handle = instance.file.open()
+
+        # send file
+        response = FileResponse(file_handle, content_type='whatever')
+        response['Content-Length'] = instance.file.size
+        response['Content-Disposition'] = 'attachment; filename="%s"' % instance.file.name
+        return response
+
+class EventsViewList(viewsets.ModelViewSet, viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]    
     queryset = Events.objects.all().order_by('-date_updated')
     serializer_class = EventsSerializers
@@ -131,17 +208,30 @@ class EventsViewList(viewsets.ModelViewSet):
  
  
     def create(self, request):
-        serializer = EventsSerializers(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-        return Response(serializer.data)
+        try:
+            serializer = EventsSerializers(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+            return Response(serializer.data)
+        except Exception as e:
+            if e == 'UNIQUE constraint failed: my_works_events.slug':
+                return Response(_('This name is taken.Choose other one'))
+            return Response(_('Some problems.Please, Try again.'))
 
-from django.utils.translation import get_language, activate, gettext
-from django.conf import settings
+    @action(methods=['get'], detail=True, renderer_classes=(PassthroughRenderer,))
+    def download(self, *args, **kwargs):
+        instance = self.get_object()
 
+        # get an open file handle (I'm just using a file attached to the model for this example):
+        file_handle = instance.file.open()
 
+        # send file
+        response = FileResponse(file_handle, content_type='whatever')
+        response['Content-Length'] = instance.file.size
+        response['Content-Disposition'] = 'attachment; filename="%s"' % instance.file.name
+        return response
 
-class VideosViewList(viewsets.ModelViewSet):
+class VideosViewList(viewsets.ModelViewSet, viewsets.ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]    
     queryset = Videos.objects.all().order_by('-date_updated')
     serializer_class = VideosSerializers
@@ -153,9 +243,28 @@ class VideosViewList(viewsets.ModelViewSet):
     def list(self, request):
         serializer = VideosSerializers(Videos.objects.all().order_by('-date_updated'), many=True)
         return Response(serializer.data)
- 
+     
     def create(self, request):
-        serializer = VideosSerializers(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-        return Response(serializer.data)
+        try:
+            serializer = VideosSerializers(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+            return Response(serializer.data)
+        except Exception as e:
+            if e == 'UNIQUE constraint failed: my_works_videos.slug':
+                return Response(_('This name is taken.Choose other one'))
+            return Response(_('Some problems.Please, Try again.'))
+    
+    @action(methods=['get'], detail=True, renderer_classes=(PassthroughRenderer,))
+    def download(self, *args, **kwargs):
+        instance = self.get_object()
+
+        # get an open file handle (I'm just using a file attached to the model for this example):
+        file_handle = instance.file.open()
+
+        # send file
+        response = FileResponse(file_handle, content_type='whatever')
+        response['Content-Length'] = instance.file.size
+        response['Content-Disposition'] = 'attachment; filename="%s"' % instance.file.name
+        return response
+    
