@@ -39,7 +39,7 @@ class Contact(models.Model):
     def __str__(self):
         return f'{self.subject}'
 
-    def message_seen(self, *args, **kwargs):
+    def save(self, *args, **kwargs):    
         self.status = True
         super(Contact, self).save(*args, **kwargs)
 

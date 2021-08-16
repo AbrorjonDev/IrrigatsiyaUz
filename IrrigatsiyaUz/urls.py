@@ -11,6 +11,9 @@ from drf_yasg import openapi
 from django.conf.urls.i18n import i18n_patterns
 from accounts.views import seen_message
 
+from django.conf.urls import handler404
+from my_works import views as my_works_views
+
 schema_view = get_schema_view(
    openapi.Info(
       title="API Docs",
@@ -44,6 +47,9 @@ urlpatterns +=i18n_patterns (
 
 urlpatterns+= (static(settings.STATIC_URL, document_root=settings.STATIC_ROOT))
 urlpatterns+= (static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT))
+
+
+handler404 = my_works_views.error_404_view
 
 admin.site.site_header = 'Alimardon Mustafoqulov Administration'#
 admin.site.site_title = 'Administration Panel'

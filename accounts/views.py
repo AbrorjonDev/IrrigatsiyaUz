@@ -46,7 +46,9 @@ class ProfileView(viewsets.ModelViewSet):
             user = dict(serializer.validated_data.get('user'))
             updated_user = User.objects.get(id=1)
             updated_user.first_name = user['first_name']
+            updated_user.first_name_ru = user['first_name_ru']
             updated_user.last_name = user['last_name']
+            updated_user.last_name_ru = user['last_name_ru']
             updated_user.email = user['email']
             updated_user.save()
             serializer.save()

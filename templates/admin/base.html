@@ -19,62 +19,7 @@
 {% if LANGUAGE_BIDI %}<link rel="stylesheet" type="text/css" href="{% block stylesheet_rtl %}{% static 'admin/css/rtl.css' %}{% endblock %}">{% endif %}
 {% block extrahead %}
 {{ block.super }}
-<style>
-/* VARIABLE DEFINITIONS */
-:root {
-  --primary: #79aec8;
-  --secondary: #417690;
-  --accent: #f5dd5d;
-  --primary-fg: #fff;
 
-  --body-fg: #333;
-  --body-bg: rgb(255, 255, 255);
-  --body-quiet-color: rgb(104, 104, 104);
-  --body-loud-color: #000;
-
-  --header-color: #ffc;
-  --header-branding-color: var(--accent);
-  --header-bg: var(--secondary);
-  --header-link-color: var(--primary-fg);
-
-  --breadcrumbs-fg: #c4dce8;
-  --breadcrumbs-link-fg: var(--body-bg);
-  --breadcrumbs-bg: var(--primary);
-
-  --link-fg: #447e9b;
-  --link-hover-color: #036;
-  --link-selected-fg: #5b80b2;
-
-  --hairline-color: #e8e8e8;
-  --border-color: #ccc;
-
-  --error-fg: #ba2121;
-
-  --message-success-bg: #dfd;
-  --message-warning-bg: #ffc;
-  --message-error-bg: #ffefef;
-
-  --darkened-bg: #202020; /* A bit darker than --body-bg */
-  --selected-bg: #e4e4e4; /* E.g. selected table cells */
-  --selected-row: #ffc;
-
-  --button-fg: #fff;
-  --button-bg: var(--primary);
-  --button-hover-bg: #609ab6;
-  --default-button-bg: var(--secondary);
-  --default-button-hover-bg: #205067;
-  --close-button-bg: #888; /* Previously #bbb, contrast 1.92 */
-  --close-button-hover-bg: #747474;
-  --delete-button-bg: #ba2121;
-  --delete-button-hover-bg: #a41515;
-
-  --object-tools-fg: var(--button-fg);
-  --object-tools-bg: var(--close-button-bg);
-  --object-tools-hover-bg: var(--close-button-hover-bg);
-}
-
-
-</style>
 {% endblock %}
 {% block responsive %}
     <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -112,19 +57,11 @@
                 <strong>{% firstof user.get_short_name user.get_username %}</strong>.
             {% endblock %}
             {% block userlinks %}
-            <a href="/admin/accounts/contact/">{% trans 'New Messages' %} ({{ messages.count}})</a>
+            <a href="/admin/accounts/contact/">{% translate 'New Messages' %} ({{ messages.count}})</a>
                 {% if site_url %}
                     <a href="{{ site_url }}">{% translate 'View site' %}</a> /
                 {% endif %}
-                <a href="{{ request|switch_i18n:'uz' }}">
-                    <img class="i18n_flag" style="width:16px; vertical-align:text-top;" src="{% static 'images/flag-uz.png' %}"/>
-                </a> /    
-                <a href="{{ request|switch_i18n:'en' }}">
-                    <img class="i18n_flag" style="width:16px; vertical-align:text-top;" src="{% static 'images/flag-usa.png' %}"/>
-                </a> /
-                <a href="{{ request|switch_i18n:'ru' }}">
-                    <img class="i18n_flag" style="width:16px; vertical-align:text-top;" src="{% static 'images/flag-ru.png' %}"/>
-                </a> /
+                
                 {% if user.has_usable_password %}
                     <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
                 {% endif %}
@@ -140,10 +77,22 @@
     {% block breadcrumbs %}
     <div class="breadcrumbs">
     <a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
+    
     {% if title %} &rsaquo; {{ title }}{% endif %}
     </div>
     {% endblock %}
     {% endif %}
+    <div class="language-point" style="text-align:right;margin-top:7px;">
+      <a class="btn btn-primary-info" href="{{ request|switch_i18n:'uz' }}">
+        <img class="i18n_flag" style="width:26px;border-radius:50%; vertical-align:text-top;" src="{% static 'images/flag-uz.png' %}"/>O'ZBEKCHA
+      </a>    /
+      <a class="btn btn-primary-info" href="{{ request|switch_i18n:'en' }}">
+        <img class="i18n_flag" style="width:26px;border-radius:50%; vertical-align:text-top;" src="{% static 'images/flag-usa.png' %}"/>INGLIZCHA
+      </a>     /
+      <a class="btn btn-primary-info" href="{{ request|switch_i18n:'ru' }}">
+        <img class="i18n_flag" style="width:26px;border-radius:50%; vertical-align:text-top;" src="{% static 'images/flag-ru.png' %}"/>RUSCHA
+      </a>      
+    </div>
 
     <div class="main" id="main">
       {% if not is_popup and is_nav_sidebar_enabled %}

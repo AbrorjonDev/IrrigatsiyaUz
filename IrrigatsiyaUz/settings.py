@@ -16,7 +16,8 @@ SECRET_KEY = 'django-insecure-h9m=u73h12lwce5(k7o&sk!kzzx+7-5--qks^27e1n5b8xeq!b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+
+ALLOWED_HOSTS = ["*"]
 
  
 # Application definition
@@ -35,7 +36,7 @@ INSTALLED_APPS = [
     
     'crispy_forms',
     'rest_framework',
-    # 'django_cleanup',   signals.py added for auto cleaning
+    
     'django_filters',
     'rest_framework.authtoken',
     'corsheaders',
@@ -95,13 +96,13 @@ WSGI_APPLICATION = 'IrrigatsiyaUz.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME':os.path.join(BASE_DIR, 'db.sqlite3')
-        # 'NAME':'irrigatsiyauz',
-        # 'HOST':'*',
-        # 'PORT':5432,
-        # 'USER':'postgres',
-        # 'PASSWORD':'testing321',
+        'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME':os.path.join(BASE_DIR, 'db.sqlite3')
+        'NAME':'irrigatsiyauz',
+        'HOST':'*',
+        'PORT':5432,
+        'USER':'postgres',
+        'PASSWORD':'testing321',
     }
 }
 

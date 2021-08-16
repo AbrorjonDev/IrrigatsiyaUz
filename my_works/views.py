@@ -36,7 +36,9 @@ from .serializers import (
     EventsSerializers,
     VideosSerializers,
     )
-
+def error_404_view(request, exception):
+    data = {"name": "127.0.0.1"}
+    return render(request,'my_works/404.html')
 
 class IsOwnerOrReadOnly(BasePermission):
     def has_object_permission(self, request, view, object):

@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email')
+        fields = ('first_name', 'last_name','first_name_ru', 'last_name_ru', 'email')
         extra_kwargs = {
 			'username':{
 				'validators':[UnicodeUsernameValidator()]
@@ -14,14 +14,16 @@ class UserSerializer(serializers.ModelSerializer):
 		}
     def update(self, instance, validated_data):
         instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.first_name_ru = validated_data.get('first_name_ru', instance.first_name_ru)
         instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.last_name_ru = validated_data.get('last_name_ru', instance.last_name_ru)
         instance.email = validated_data.get('email', instance.email)
 class ProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(required=True)
 
     class Meta:
         model = Profile
-        fields = ('user', 'faculty', 'cafedra', 'level', 'avatar')
+        fields = ('user', 'faculty','faculty_uz','faculty_en','faculty_ru', 'cafedra','cafedra_uz','cafedra_en','cafedra_ru', 'level','level_uz','level_ru','level_en', 'avatar')
         related_object = 'user'
         depth = 1
 
@@ -29,8 +31,19 @@ class ProfileSerializer(serializers.ModelSerializer):
         user_data = validated_data.pop('user')
         instance.user = validated_data.get('user', instance.user)
         instance.faculty = validated_data.get('faculty', instance.faculty)
+        instance.faculty_uz = validated_data.get('faculty_uz', instance.faculty_uz)
+        instance.faculty_ru = validated_data.get('faculty_ru', instance.faculty_ru)
+        instance.faculty_en = validated_data.get('faculty_en', instance.faculty_en)
+
         instance.cafedra = validated_data.get('cafedra', instance.cafedra)
+        instance.cafedra_uz = validated_data.get('cafedra_uz', instance.cafedra_uz)
+        instance.cafedra_ru = validated_data.get('cafedra_ru', instance.cafedra_ru)
+        instance.cafedra_en = validated_data.get('cafedra_en', instance.cafedra_en)
+
         instance.level = validated_data.get('level', instance.level)
+        instance.level_uz = validated_data.get('level_uz', instance.level_uz)
+        instance.level_ru = validated_data.get('level_ru', instance.level_ru)
+        instance.level_en = validated_data.get('level_en', instance.level_en)
         instance.avatar = validated_data.get('avatar', instance.avatar)
         instance.save()
         return instance

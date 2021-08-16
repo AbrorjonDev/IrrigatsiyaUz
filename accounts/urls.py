@@ -13,7 +13,7 @@ router.register(r'',ProfileView, basename='profile')
 
 
 urlpatterns = [
-     path('auth-token/', obtain_auth_token, name='token-auth'),
+     # path('auth-token/', obtain_auth_token, name='token-auth'),
      path('api-auth/', include('rest_framework.urls')),
 
      path('password-reset/',
